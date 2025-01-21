@@ -50,8 +50,9 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable) // Updated to use the new API
                 .authorizeHttpRequests(authRequests -> authRequests
-                        .requestMatchers(HttpMethod.GET,"/welcome/users","/welcome/current","/welcome/users/*").authenticated()
                         .requestMatchers(HttpMethod.POST, "/welcome/user","/welcome/generate").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        .anyRequest().authenticated()
 
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
