@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,11 +23,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+    private static final String[] AUTH_WHITELIST = {
+            // -- swagger ui
+            "/v3/api-docs",
+            "/swagger-ui/**",
+    };
     private final JwtTokenFilter jwtTokenFilter;
 
     public SecurityConfig(JwtTokenFilter jwtTokenFilter) {
@@ -34,26 +39,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    //authentication
-    public UserDetailsService userDetailsService(){
-//        UserDetails admin = User.withUsername("Abhinab")
-//                .password(encoder.encode("pass")).roles("ADMIN").build();
-//        UserDetails user = User.withUsername("Kirtika")
-//                .password(encoder.encode("pow")).roles("USER").build();
-//        return new InMemoryUserDetailsManager(admin,user);
-        return new MyUserDetailsService();
-    }
-
-    //authorization
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf(AbstractHttpConfigurer::disable) // Updated to use the new API
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authRequests -> authRequests
-                        .requestMatchers(HttpMethod.POST, "/welcome/user","/welcome/generate").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        // Allow Swagger paths
+                        .requestMatchers(AUTH_WHITELIST).permitAll()
+                        // Allow public APIs
+                        .requestMatchers(HttpMethod.POST, "/welcome/user", "/welcome/generate").permitAll()
+                        // Secure other endpoints
                         .anyRequest().authenticated()
-
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -87,5 +82,10 @@ public class SecurityConfig {
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new MyUserDetailsService();
     }
 }

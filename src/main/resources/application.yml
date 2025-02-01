@@ -1,0 +1,52 @@
+# Database Configuration
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/quizdb?serverTimezone=UTC
+    username: root
+    password: Abhi5305@
+    driver-class: com.mysql.cj.jdbc.Driver
+#    changelog-file: src/main/resources/db/changelog/db.changelog-master.yaml
+
+# JPA Configuration
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+
+# Security Configuration (commented out)
+
+  security:
+    user:
+      name: Abhinab
+      password: pass123
+
+# Server Configuration
+server:
+  port: 8181
+
+jwt:
+  secret-key: 4dbb22554b27878f68ee25fa09ef7d821a7579be4fad8dbc200b9d622e8698c9d6142ac96bb6b7c5aa2b4f6e9e2ade1dc1df5e57d45eedc448d4bb12ad6587965eedd26df52009681fccf27c2a95a36a18b488f4715ae499a6e080095736e576fce2ec0b79399c558282a3b4adec5ede6c8fde203d054bda25beaa4ed681b93d7705a534bacd4f4b182f36601ed4720834df44fc6dbb2972c72a8fb318e3681fa1d319a3fc1ab570b77c3faa9833ae2e9cf0d5f4dcb31fcac3c8c13af5d698ba5d2c1286003722b3aa72e1f2def74c13865ec6851b84661485e9d8215d5cd33c49558d72e9ee37c9b98e829a71cd047d80859cb51581885146d1155d4ca0de09
+
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui/api-docs.html
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # Exposes all actuator endpoints
+  security:
+    enabled: false # Disable security for management endpoints (optional for testing)
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG # Enables Spring Security debug logs
