@@ -54,9 +54,14 @@ public class QuestionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("quiz/{id}")
-    public ResponseEntity<List<Question>> getQuestionsOfQuiz(@PathVariable Long id) {
-        List<Question> questions = questionService.getQuestionsOfQuiz(id);
+    @GetMapping("all/quiz/{id}")
+    public ResponseEntity<List<Question>> getAllQuestionsOfQuiz(@PathVariable Long id) {
+        List<Question> questions = questionService.getAllQuestionsOfQuiz(id);
+        return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+    @GetMapping("limit/quiz/{id}")
+    public ResponseEntity<List<Question>> getQuestionsOfQuizByNumberOfQuestions(@PathVariable Long id) {
+        List<Question> questions = questionService.getQuestionsOfQuizByNumberOfQuestions(id);
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 

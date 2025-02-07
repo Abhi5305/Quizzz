@@ -12,7 +12,7 @@ public class Category {
     private Long id;
 
     private String title;
-
+    @Column(length = 5000)
     private String description;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

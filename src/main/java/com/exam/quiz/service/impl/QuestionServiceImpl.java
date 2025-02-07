@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -61,7 +60,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestionsOfQuiz(Long quizId) {
+    public List<Question> getQuestionsOfQuizByNumberOfQuestions(Long quizId) {
         Quiz quiz = quizService.getQuizById(quizId);
         List<Question> questions = quiz.getQuestions().stream().toList();
         //compare the no of questions  count/size(list) vs provided if found bigger shorten the list with provided no.
@@ -70,5 +69,11 @@ public class QuestionServiceImpl implements QuestionService {
         }
         Collections.shuffle(questions);
         return questions;
+    }
+
+    @Override
+    public List<Question> getAllQuestionsOfQuiz(Long quizId) {
+        Quiz quiz = quizService.getQuizById(quizId);
+        return quiz.getQuestions().stream().toList();
     }
 }

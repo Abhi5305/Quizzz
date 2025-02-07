@@ -11,5 +11,6 @@ public interface QuestionService {
     Optional<Question> getQuestionById(Long id);
     Question updateQuestion(Long id, Question question);
     void deleteQuestion(Long id);
-    List<Question> getQuestionsOfQuiz(Long quizId);
+    List<Question> getQuestionsOfQuizByNumberOfQuestions(Long quizId);
+    List<Question> getAllQuestionsOfQuiz(Long quizId);
 }

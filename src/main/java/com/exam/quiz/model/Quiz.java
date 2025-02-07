@@ -12,13 +12,13 @@ public class Quiz {
     private Long id;
 
     private String title;
-
+    @Column(length = 5000)
     private String description;
 
     private int totalMarks;
 
     private int numberOfQuestions;
-    private String status = "ACTIVE";
+    private boolean status = false;
 
     @ManyToOne
     private Category category;
@@ -84,11 +84,11 @@ public class Quiz {
         this.questions = questions;
     }
 
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 }

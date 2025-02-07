@@ -43,6 +43,7 @@ public class QuizServiceImpl implements QuizService {
                     existingQuiz.setDescription(quiz.getDescription());
                     existingQuiz.setTotalMarks(quiz.getTotalMarks());
                     existingQuiz.setNumberOfQuestions(quiz.getNumberOfQuestions());
+                    existingQuiz.setStatus(quiz.isStatus());
                     return quizRepository.save(existingQuiz);
                 })
                 .orElseThrow(() -> new RuntimeException("Quiz not found with id: " + id));
