@@ -11,7 +11,8 @@ public interface QuizService {
     Quiz getQuizById(Long id);
     Quiz updateQuiz(Long id, Quiz quiz);
     void deleteQuiz(Long id);
-
     List<Quiz> getQuizzesOfCategory(Long id);
+    List<Quiz> getQuizByStatus();
+    List<Quiz> getActiveQuizzesOfCategory(Long id);
 }
 

@@ -1,5 +1,6 @@
 package com.exam.quiz.controller;
 
+import com.exam.quiz.model.Category;
 import com.exam.quiz.model.Quiz;
 import com.exam.quiz.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +54,19 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("category/{id}")
+    @GetMapping("/category/{id}")
     public ResponseEntity<List<Quiz>> getQuizzesOfCategory(@PathVariable Long id) {
         List<Quiz> quizzes = quizService.getQuizzesOfCategory(id);
         return new ResponseEntity<>(quizzes, HttpStatus.OK);
+    }
+
+    @GetMapping("/status")
+    public List<Quiz> getQuizByStatus() {
+        return quizService.getQuizByStatus();
+    }
+    @GetMapping("/active/category/{id}")
+    public List<Quiz> getActiveQuizzesOfCategory(@PathVariable Long id) {
+        return quizService.getActiveQuizzesOfCategory(id);
     }
 
 }

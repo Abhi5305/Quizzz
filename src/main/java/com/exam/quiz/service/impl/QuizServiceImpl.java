@@ -63,5 +63,14 @@ public class QuizServiceImpl implements QuizService {
         Category category = categoryService.getCategoryById(id);
         return category.getQuizzes().stream().toList();
     }
+    @Override
+    public List<Quiz> getQuizByStatus() {
+        return quizRepository.findByStatus(true);
+    }
+    @Override
+    public List<Quiz> getActiveQuizzesOfCategory(Long id) {
+        Category category = categoryService.getCategoryById(id);
+        return quizRepository.findByCategoryAndStatus(category,true);
+    }
 
 }
