@@ -1,11 +1,18 @@
-# Use Maven to build the application
-FROM eclipse-temurin:21.0.3_9-jdk AS build
+# Build stage
+FROM maven:3.8.4-openjdk-21-slim AS build
 WORKDIR /app
-COPY . .
+# Copy only pom.xml first to leverage Docker cache for dependencies
+COPY pom.xml .
+# Download dependencies offline to improve caching between builds
+RUN mvn dependency:go-offline
+
+# Copy source code and build the application
+COPY src ./src
+# Run compilation and packaging, skipping tests and javadoc generation
 RUN mvn clean package -DskipTests
 
-# Use a lightweight JDK runtime for running the application
-FROM eclipse-temurin:21-jdk-slim
+# Run stage
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/quizzz-0.0.1-SNAPSHOT.jar abhi-quiz.jar
 
