@@ -1,8 +1,8 @@
 # Database Configuration
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=true&requireSSL=true
+    username: ${DB_USER}
     password: ${DB_PASSWORD}
     driver-class: com.mysql.cj.jdbc.Driver
 #    changelog-file: src/main/resources/db/changelog/db.changelog-master.yaml
