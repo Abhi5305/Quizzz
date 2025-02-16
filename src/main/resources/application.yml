@@ -9,13 +9,11 @@ spring:
 
 # JPA Configuration
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: none
-    show-sql: true
-  flyway:
-    enabled: true
-    locations:
-      - classpath:db/migration
+      ddl-auto: update
 
 # Security Configuration (commented out)
 
