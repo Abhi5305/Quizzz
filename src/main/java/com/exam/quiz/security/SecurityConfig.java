@@ -23,15 +23,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
     private static final String[] AUTH_WHITELIST = {
-            // -- swagger ui
-            "/v3/api-docs",
+            "/v3/api-docs/**",
             "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/api-docs/**",
+            "/swagger-ui-custom.html"
     };
+
     private final JwtTokenFilter jwtTokenFilter;
 
     public SecurityConfig(JwtTokenFilter jwtTokenFilter) {
@@ -59,9 +65,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:4200"); // Replace with your frontend URL
-        configuration.addAllowedMethod("*"); // Allow all HTTP methods
-        configuration.addAllowedHeader("*"); // Allow all headers
+        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // List for multiple origins
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Explicit methods
+        configuration.setAllowedHeaders(List.of("*")); // Allows all headers
         configuration.setAllowCredentials(true); // Allow cookies if required
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
