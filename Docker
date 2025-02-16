@@ -1,6 +1,5 @@
 # Build stage
-FROM maven:3.8.4-openjdk-21-slim AS build
-WORKDIR /app
+FROM maven:3.9.8-eclipse-temurin-21 AS buildWORKDIR /app
 # Copy only pom.xml first to leverage Docker cache for dependencies
 COPY pom.xml .
 # Download dependencies offline to improve caching between builds
