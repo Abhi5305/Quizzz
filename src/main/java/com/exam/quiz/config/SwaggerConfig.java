@@ -18,7 +18,7 @@ public class SwaggerConfig {
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
                 .group("admin-management")
-                .pathsToMatch("/welcome/users/**", "/welcome/user")
+                    .pathsToMatch("/welcome/users/**","/welcome/users")
                 .addOpenApiMethodFilter(method ->
                         method.isAnnotationPresent(PreAuthorize.class) && method.getAnnotation(PreAuthorize.class).value().contains("hasRole('ROLE_ADMIN')")
                 )
@@ -29,7 +29,7 @@ public class SwaggerConfig {
     public GroupedOpenApi authenticationApi() {
         return GroupedOpenApi.builder()
                 .group("authentication")
-                .pathsToMatch("/welcome/generate", "/welcome/current")
+                .pathsToMatch("/welcome/generate", "/welcome/current","/welcome/user")
                 .build();
     }
 
@@ -45,7 +45,7 @@ public class SwaggerConfig {
     public GroupedOpenApi userApi() {
         return GroupedOpenApi.builder()
                 .group("user-management")
-                .pathsToMatch("/welcome/users/{username}", "/welcome/current")
+                .pathsToMatch("/welcome/users/{username}")
                 .addOpenApiMethodFilter(method ->
                         method.isAnnotationPresent(PreAuthorize.class) && method.getAnnotation(PreAuthorize.class).value().contains("hasAnyRole('USER','ADMIN')")
                 )
