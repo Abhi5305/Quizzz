@@ -34,6 +34,14 @@ public class SwaggerConfig {
     }
 
     @Bean
+    public GroupedOpenApi examApi() {
+        return GroupedOpenApi.builder()
+                .group("exam")
+                .pathsToMatch("/quizzes/**", "/categories/**","/questions/**")
+                .build();
+    }
+
+    @Bean
     public GroupedOpenApi userApi() {
         return GroupedOpenApi.builder()
                 .group("user-management")
@@ -53,7 +61,7 @@ public class SwaggerConfig {
                         .description("APIs for managing users, authentication, and roles.")
                         .contact(new Contact()
                                 .name("Support Team")
-                                .email("support@example.com")
+                                .email("abhinab.k5305@gmail.com")
                                 .url("https://example.com")))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new Components()
