@@ -65,7 +65,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // List for multiple origins
+        configuration.setAllowedOrigins(List.of("https://exam-abhi.onrender.com")); // List for multiple origins
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Explicit methods
         configuration.setAllowedHeaders(List.of("*")); // Allows all headers
         configuration.setAllowCredentials(true); // Allow cookies if required
