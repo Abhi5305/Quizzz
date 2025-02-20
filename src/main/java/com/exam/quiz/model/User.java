@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private String lastName;
     @Email
     private String email;
-    private String roles = "ROLE_ADMIN";
+    private String roles = "ROLE_USER";
     private String profile ="default.png";
     private String status = "ACTIVE";
     private String phone;
